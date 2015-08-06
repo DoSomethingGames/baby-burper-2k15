@@ -39,11 +39,11 @@ function FoodController() {
 
     currTime = (new Date()).getTime();
 
-    // @todo destroy foods when they fall out of frame
-    // if (currFoods.length < maxFoods) {
     if (currTime - lastSpawnTime > delayBetweenSpawn) {
       spawnFood();
     }
+
+    destroyFood();
   }
 
   /**
@@ -74,6 +74,27 @@ function FoodController() {
     // Setup timing for the next spawn
     lastSpawnTime = (new Date()).getTime();
     delayBetweenSpawn = Math.random() * (maxSpawnDelay - minSpawnDelay);
+  }
+
+  /**
+   * Destroy food that falls out of the game scene
+   */
+  function destroyFood() {
+    var food;
+    var destroyAtY;
+    var startingIndex;
+
+    destroyAtY = game.world.height + 100; // + 100 just for some buffer
+
+    startingIndex = currFoods.length - 1;
+    for (i = startingIndex; i >= 0; i--) {
+      food = currFoods[i];
+
+      if (food.position.y > destroyAtY) {
+        food.destroy();
+        currFoods.splice(i, 1);
+      }
+    }
   }
 
   return {
