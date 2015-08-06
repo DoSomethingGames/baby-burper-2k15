@@ -30,10 +30,16 @@ module.exports = function (grunt) {
     },
     concat: {
       dist: {
-        src: [  "src/lib/**/*.js",
-          "src/game/**/*.js"
+        src: [  'src/lib/**/*.js',
+          'src/game/main.js',
+          'src/game/GameController.js',
+          'src/game/PlayerController.js',
+          'src/game/FoodController.js',
+          'src/game/BurpController.js',
+          'src/game/StartState.js',
+          'src/game/GameState.js'
            ],
-        dest: 'deploy/js/<%= pkg.name %>.js'
+        dest: 'deploy/js/game.js'
       }
     },
     watch: {
