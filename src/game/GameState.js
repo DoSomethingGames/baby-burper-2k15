@@ -14,8 +14,8 @@ function GameState() {
     // @todo placeholder
     var text = "baby-burper-2l15";
     var style = { font: "24px Arial", fill: "#fff", align: "center" };
-    var t = game.add.text(this.world.centerX, this.world.centerY, text, style);
-    t.anchor.setTo(0.5, 0.5);
+    // var t = game.add.text(this.world.centerX, this.world.centerY, text, style);
+    // t.anchor.setTo(0.5, 0.5);
 
     gameController = new GameController();
     babyController = new BabyController();
@@ -31,14 +31,15 @@ function GameState() {
    * preload()
    */
   function preload() {
-
+    gameController.preload();
   }
 
   /**
    * create()
    */
   function create() {
-
+    lives = 3;
+    gameController.create();
   }
 
   /**
@@ -46,6 +47,17 @@ function GameState() {
    */
   function update() {
     gameController.update();
+  }
+
+  function loseLife() {
+    lives--;
+    if (lives <= 0) {
+      //move to final scene
+    }
+  }
+
+  function foodEaten() {
+    score++;
   }
 
   return {

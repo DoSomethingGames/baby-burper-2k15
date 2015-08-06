@@ -15,13 +15,34 @@ function GameController() {
     foodController = controller;
   }
 
+  function preload() {
+    babyController.preload();
+    //foodController.preload();
+    //burpController.preload();
+  }
+
+  function init() {
+    babyController.init();
+    //foodController.init();
+    //burpController.init();
+  }
+
+  function create() {
+    babyController.create();
+    //foodController.create();
+    //burpController.create();
+  }
+
   function update() {
     babyController.update();
-    burpController.update();
     foodController.update();
+    //burpController.update();
   }
 
   return {
+    preload: preload,
+    init: init,
+    create: create,
     update: update,
     setBaby: setBaby,
     setBurp: setBurp,
