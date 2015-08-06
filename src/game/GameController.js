@@ -37,7 +37,6 @@ function GameController() {
     babyController.update();
     foodController.update();
     //burpController.update();
-    
   }
 
   return {

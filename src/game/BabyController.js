@@ -5,7 +5,6 @@ function BabyController() {
   function init() {}
 
   function preload() {
-    console.log('baby preloaded');
     game.load.image('babyImg', 'assets/baby.png');
   }
 
@@ -14,18 +13,25 @@ function BabyController() {
   var rightBtn;
   var spaceBtn;
 
+  var gameState;
+
   function create() {
-    console.log('baby created');
+    //enable physics
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.physics.arcade.gravity.y = 100;
 
-    baby = game.add.sprite(game.width/2, game.height - this.height - 10, 'babyImg');
+    //instantiate gameState
+    gameState = new GameState();
+
+    //create baby sprite, add physics
+    baby = game.add.sprite(game.width/2, game.height - game.cache.getImage('babyImg').height, 'babyImg');
     game.physics.arcade.enable(baby);
     baby.body.velocity.set(0, 0);
     baby.body.bounce.y = 0;
     baby.body.bounce.x = 1;
     baby.body.collideWorldBounds = true;
 
+    //create KeyListeners
     leftBtn = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
     leftBtn.onDown.add(moveLeft, this);
 
@@ -41,7 +47,6 @@ function BabyController() {
   }
 
   function update() {
-
   }
 
   function moveLeft() {
@@ -54,6 +59,12 @@ function BabyController() {
 
   function burp() {
 
+  }
+
+  function checkCollision(food) {
+    for (var i = 0; i < food.length; i++) {
+      game.physics.arcade.collide(baby, food[i], gameState.foodEaten()); //need callback collision to remove food
+    }
   }
 
   return {

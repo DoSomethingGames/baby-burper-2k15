@@ -49,6 +49,17 @@ function GameState() {
     gameController.update();
   }
 
+  function loseLife() {
+    lives--;
+    if (lives <= 0) {
+      //move to final scene
+    }
+  }
+
+  function foodEaten() {
+    score++;
+  }
+
   return {
     init: init,
     preload: preload,
