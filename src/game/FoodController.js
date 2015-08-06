@@ -3,6 +3,7 @@ function FoodController() {
   var currFoods;
   var startTime;
   var lastSpawnTime;
+  var delayBetweenSpawn;
 
   // Spawn delay in milliseconds
   var minSpawnDelay = 500;
@@ -14,6 +15,7 @@ function FoodController() {
     foodLibrary = [];
 
     lastSpawnTime = 0;
+    delayBetweenSpawn = 0;
   }
 
   function preload() {
@@ -21,9 +23,9 @@ function FoodController() {
     
     tmp = {name: 'food1', image: game.load.image('food1', 'assets/food1.png')};
     foodLibrary[foodLibrary.length] = tmp;
-    tmp = {name: 'food2', image: game.load.image('food1', 'assets/food2.png')};
+    tmp = {name: 'food2', image: game.load.image('food2', 'assets/food2.png')};
     foodLibrary[foodLibrary.length] = tmp;
-    tmp = {name: 'food3', image: game.load.image('food1', 'assets/food3.png')};
+    tmp = {name: 'food3', image: game.load.image('food3', 'assets/food3.png')};
     foodLibrary[foodLibrary.length] = tmp;
   }
 
@@ -38,24 +40,30 @@ function FoodController() {
     currTime = (new Date()).getTime();
 
     // @todo destroy foods when they fall out of frame
-    // @todo spawn new foods when able
     // if (currFoods.length < maxFoods) {
-    if (currTime - lastSpawnTime > 1000) {
+    if (currTime - lastSpawnTime > delayBetweenSpawn) {
       spawnFood();
     }
   }
 
+  /**
+   * Spawns food in random positions and times.
+   */
   function spawnFood() {
     var x;
     var y;
     var sprite;
+    var randomSpriteIndex;
+    var spriteName;
 
     x = Math.floor(Math.random() * 700);
     x += 50;
     y = 0;
 
     // Create and position sprite
-    sprite = game.add.sprite(x, y, foodLibrary[0].name);
+    randomSpriteIndex = Math.floor(Math.random() * foodLibrary.length);
+    spriteName = foodLibrary[randomSpriteIndex].name;
+    sprite = game.add.sprite(x, y, spriteName);
 
     // Add physics to the sprite
     game.physics.enable([sprite], Phaser.Physics.ARCADE);
@@ -63,7 +71,9 @@ function FoodController() {
 
     currFoods[currFoods.length] = sprite;
 
+    // Setup timing for the next spawn
     lastSpawnTime = (new Date()).getTime();
+    delayBetweenSpawn = Math.random() * (maxSpawnDelay - minSpawnDelay);
   }
 
   return {
