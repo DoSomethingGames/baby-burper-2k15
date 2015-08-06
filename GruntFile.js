@@ -33,7 +33,7 @@ module.exports = function (grunt) {
         src: [  'src/lib/**/*.js',
           'src/game/main.js',
           'src/game/GameController.js',
-          'src/game/PlayerController.js',
+          'src/game/BabyController.js',
           'src/game/FoodController.js',
           'src/game/BurpController.js',
           'src/game/StartState.js',
